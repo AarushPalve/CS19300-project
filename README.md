@@ -4,7 +4,7 @@ Contains my personal projects required for Purdue CS 19300 | a command line prog
 ### Project Goal
 Create a Blackjack simulater/training program that helps people learn how to count cards and practice their skills via the Hi-Lo system
 ## Tech Stack
-* Github pages for hosting (may change or host on neociites)
+* Github pages for hosting (or host on neociites)
          * Pyodide or Brython to compile code into javascript 
 * Python
 * Blessing (for nicer command line interactions)
