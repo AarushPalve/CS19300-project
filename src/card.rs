@@ -44,6 +44,7 @@ impl fmt::Display for Suit {
     }
 }
 //holds the enums
+#[derive(Copy, Clone)] //add this bc we need to copy card in our shuffle method
 pub struct Card {
     suit: Suit,
     rank: Rank,

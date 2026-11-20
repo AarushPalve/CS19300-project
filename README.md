@@ -25,3 +25,9 @@ Create a Blackjack simulater/training program that helps people learn how to cou
 * Common blackjack side bets including Insurance, Perfect Pairs, and 21+3.
 * Display statistical player edge based on the current count.
 * Competitive ranking system to compare tracking efficiency and scores with other players worldwide.
+
+### Docs
+A card is a struct of 2 enums (suit and rank) and an impl with methods to get the suit and rank, a to string and constructor
+A deck is a struct of 2 lists containing played cards and cards that need to be delt (playable cards) and 
+an impl with a deal that randomly picks a card and moves it to the played list (Vec) and and a constructor that 
+initializes the 2 decks and fills the playable deck with all the cards
