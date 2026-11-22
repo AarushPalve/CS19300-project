@@ -1,4 +1,6 @@
 use std::fmt;
+
+use crate::card::Rank::Number;
 //tels Rust that we can treat them
 // like primatives (kinda not rlly)
 // an enum is a custom data type
@@ -69,5 +71,22 @@ impl Card {
     // this here, may remove
     pub fn to_string(&self) -> String {
         format!("{} of {}", self.rank, self.suit)
+    }
+    //will for card coutning
+    pub fn get_count(&self) -> i32 {
+        match self.rank {
+            Rank::Number(2..=6) => 1,
+            Rank::Number(7..=9) => 0,
+            Rank::Number(10) => -1,
+            Rank::Ace | Rank::Jack | Rank::King | Rank::Queen => -1,
+            _ => 0,
+        }
+    }
+    pub fn value(&self) -> u8 {
+        match self.rank {
+            Rank::Number(n) => n,
+            Rank::Jack | Rank::Queen | Rank::King => 10,
+            Rank::Ace => 11,
+        }
     }
 }
