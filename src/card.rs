@@ -57,16 +57,6 @@ impl Card {
     pub fn new(suit: Suit, rank: Rank) -> Self {
         Self { suit, rank }
     }
-    //in java these would be get_suit and get_rank
-    // but Rust convention is different
-    // we need to wrap them in getters and setters
-    // because we want the cards to be immutable
-    pub fn suit(&self) -> Suit {
-        return self.suit;
-    }
-    pub fn rank(&self) -> Rank {
-        return self.rank;
-    }
     //to String method ... debating implimenting
     // this here, may remove
     pub fn to_string(&self) -> String {
