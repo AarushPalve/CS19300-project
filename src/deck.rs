@@ -21,7 +21,7 @@ impl Deck {
             }
         }
         //need to return the deck struct
-        // usually rust is smart enought to
+        // usually rust is smart enough to
         // auto return stuff but not in this case
         Deck {
             playable_cards,
@@ -47,7 +47,7 @@ impl Deck {
         return Some(card);
     }
     //this might be useful for shoe logic later
-    pub fn is_empty(self) -> bool {
-        self.playable_cards.is_empty()
+    pub fn needs_shuffling(&self) -> bool {
+        return self.played_cards.len() >= 26;
     }
 }
