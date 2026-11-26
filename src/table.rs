@@ -4,7 +4,10 @@ use crate::player::Player;
 pub struct Table {
     players: Vec<Player>,
     deck: Deck,
+    //count tracks the count of the info the player has
     count: i32,
+    //pending_count tracks the count of the info the player doesn't have/will get at the end of the round
+    pending_count: i32,
 }
 
 impl Table {
@@ -16,6 +19,7 @@ impl Table {
             players: vec![Player::new(0, true)],
             deck: Deck::new(),
             count: 0,
+            pending_count: 0,
         }
     }
     //no remove players bc lazyness
@@ -30,11 +34,18 @@ impl Table {
         self.count += card.get_count();
         self.players[player_index].recieve(card);
     }
+    //need to hide 1/2 cards the dealer gets
+    fn deal_hidden_to_dealer(&mut self) {
+        let card = self.deck.deal().unwrap();
+        self.pending_count += card.get_count();
+        self.players[0].recieve(card);
+    }
     pub fn get_count(&self) -> i32 {
         self.count
     }
     pub fn start_round(&mut self) {
-        //reset all the player's hands
+        //reset all the player's hands and game states
+        self.pending_count = 0;
         for player in &mut self.players {
             player.clear_hand();
         }
@@ -48,11 +59,22 @@ impl Table {
 
         //deal in the way blackjack is delt
         //start left of the dealer then the dealer
-        for _ in 0..2 {
+        // deal the first card face down
+        for pass in 0..2 {
             for i in 1..self.players.len() {
                 self.deal_to_player(i);
             }
-            self.deal_to_player(0);
+            if pass == 0 {
+                self.deal_to_player(0);
+            } else {
+                self.deal_hidden_to_dealer();
+            }
         }
+    }
+
+    //bc the player can't see the dealer's card
+    pub fn reveal_dealer(&mut self) {
+        self.count += self.pending_count;
+        self.pending_count = 0;
     }
 }
