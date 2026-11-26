@@ -8,12 +8,20 @@ use crate::table::Table;
 use std::io;
 //temp prog for testing
 fn main() {
-    let mut table = Table::new();
+    let num_decks: usize = loop {
+        println!("Num decks? (1-6)");
+        let mut input = String::new();
+        io::stdin().read_line(&mut input).unwrap();
+        match input.trim().parse::<usize>() {
+            Ok(n) if (1..=6).contains(&n) => break n,
+            _ => println!("Enter a number between 1 and 6."),
+        }
+    };
+    let mut table = Table::new(num_decks);
     table.add_player(Player::new(100, false));
     loop {
         table.start_round();
         table.reveal_dealer();
-        let p_total = table.get_player(1).get_total();
         while table.get_player(1).get_total() < 21 {
             println!(
                 "Dealer: {} | You: {} ({}) | Count: {}",

@@ -3,11 +3,12 @@ use rand::RngExt;
 pub struct Deck {
     playable_cards: Vec<Card>,
     played_cards: Vec<Card>,
+    total_cards: usize,
 }
 
 impl Deck {
-    pub fn new() -> Self {
-        let mut playable_cards = Vec::with_capacity(52);
+    pub fn new(num_decks: usize) -> Self {
+        let mut playable_cards = Vec::with_capacity(52 * num_decks);
         //even tho we mutate later we don't act need to give played_cards the mut keyword
         let played_cards = Vec::with_capacity(52);
         let suits = [Suit::Spades, Suit::Hearts, Suit::Diamonds, Suit::Clubs];
@@ -23,9 +24,11 @@ impl Deck {
         //need to return the deck struct
         // usually rust is smart enough to
         // auto return stuff but not in this case
+        let total_cards = 52 * num_decks;
         Deck {
             playable_cards,
             played_cards,
+            total_cards,
         }
     }
     //am lazy and don't want to write a shuffle method
@@ -46,8 +49,16 @@ impl Deck {
         //just telling the compiler we will have a card val to return her
         return Some(card);
     }
-    //this might be useful for shoe logic later
+    //this is useful for shoe logic now
+    // w/ 75% pen
     pub fn needs_shuffling(&self) -> bool {
-        return self.played_cards.len() >= 26;
+        self.played_cards.len() * 4 >= self.total_cards * 3
+    }
+    pub fn cards_remaining(&self) -> usize {
+        self.playable_cards.len()
+    }
+
+    pub fn decks_remaining(&self) -> f32 {
+        self.playable_cards.len() as f32 / 52.0
     }
 }
