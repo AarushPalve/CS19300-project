@@ -79,6 +79,7 @@ impl Card {
             Rank::Ace => 11,
         }
     }
+    //aces are weird and I need to handle that now
     pub fn is_ace(&self) -> bool {
         match self.rank {
             Rank::Ace => true,

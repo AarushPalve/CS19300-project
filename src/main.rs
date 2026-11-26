@@ -6,12 +6,14 @@ mod table;
 use crate::player::Player;
 use crate::table::Table;
 use std::io;
-//simple and temp prog for testing
+//temp prog for testing
 fn main() {
     let mut table = Table::new();
     table.add_player(Player::new(100, false));
     loop {
         table.start_round();
+        table.reveal_dealer();
+        let p_total = table.get_player(1).get_total();
         while table.get_player(1).get_total() < 21 {
             println!(
                 "Dealer: {} | You: {} ({}) | Count: {}",
@@ -32,7 +34,12 @@ fn main() {
         }
         let p_total = table.get_player(1).get_total();
         if p_total > 21 {
-            println!("Bust! ({})", p_total);
+            println!(
+                "Bust:( ({}) | Dealer had: {} | Count: {}",
+                p_total,
+                table.get_player(0).show_hand(),
+                table.get_count()
+            );
         } else {
             while table.get_player(0).get_total() < 17 {
                 table.deal_to_player(0);
