@@ -17,9 +17,24 @@ impl Player {
         }
     }
     pub fn recieve(&mut self, card: Card) {
-        self.total += card.value() as i32;
         self.cards.push(card);
+        let mut total = 0;
+        let mut aces = 0;
+        //update total we need to re-add everything bc aces
+        for c in &self.cards {
+            total += c.value() as i32;
+            if c.is_ace() {
+                aces += 1;
+            }
+        }
+        //handle aces
+        while total > 21 && aces > 0 {
+            total -= 10;
+            aces -= 1;
+        }
+        self.total = total;
     }
+
     pub fn add_money(&mut self, money: i64) {
         if (money >= 0) {
             self.money += money;

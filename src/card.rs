@@ -79,4 +79,10 @@ impl Card {
             Rank::Ace => 11,
         }
     }
+    pub fn is_ace(&self) -> bool {
+        match self.rank {
+            Rank::Ace => true,
+            _ => false,
+        }
+    }
 }
