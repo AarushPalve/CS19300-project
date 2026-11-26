@@ -8,18 +8,20 @@ pub struct Table {
     count: i32,
     //pending_count tracks the count of the info the player doesn't have/will get at the end of the round
     pending_count: i32,
+    num_decks: usize,
 }
 
 impl Table {
-    pub fn new() -> Self {
+    pub fn new(num_decks: usize) -> Self {
         Table {
             // treat the dealer as a bot w/o any money while initialiing the playerlist
             // we say the 0th player is the dealer
             // index one will be the player
             players: vec![Player::new(0, true)],
-            deck: Deck::new(),
+            deck: Deck::new(num_decks),
             count: 0,
             pending_count: 0,
+            num_decks,
         }
     }
     //no remove players bc lazyness
@@ -53,7 +55,7 @@ impl Table {
         if self.deck.needs_shuffling() {
             //might change
             println!("Shuffled deck");
-            self.deck = Deck::new();
+            self.deck = Deck::new(self.num_decks);
             self.count = 0;
         }
 
