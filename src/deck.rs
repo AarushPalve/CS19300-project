@@ -13,12 +13,15 @@ impl Deck {
         let played_cards = Vec::with_capacity(52);
         let suits = [Suit::Spades, Suit::Hearts, Suit::Diamonds, Suit::Clubs];
         let face_ranks = [Rank::Jack, Rank::Queen, Rank::King, Rank::Ace];
-        for suit in suits {
-            for val in 2..=10 {
-                playable_cards.push(Card::new(suit, Rank::Number(val)));
-            }
-            for rank in face_ranks {
-                playable_cards.push(Card::new(suit, rank));
+        //act account for num decks now
+        for _ in 0..num_decks {
+            for suit in suits {
+                for val in 2..=10 {
+                    playable_cards.push(Card::new(suit, Rank::Number(val)));
+                }
+                for rank in face_ranks {
+                    playable_cards.push(Card::new(suit, rank));
+                }
             }
         }
         //need to return the deck struct
