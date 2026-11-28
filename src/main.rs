@@ -21,7 +21,6 @@ fn main() {
     table.add_player(Player::new(100, false));
     loop {
         table.start_round();
-        table.reveal_dealer();
         while table.get_player(1).get_total() < 21 {
             println!(
                 "Dealer: {} | You: {} ({}) | Count: {}",
@@ -41,6 +40,8 @@ fn main() {
             }
         }
         let p_total = table.get_player(1).get_total();
+
+        table.reveal_dealer();
         if p_total > 21 {
             println!(
                 "Bust:( ({}) | Dealer had: {} | Count: {}",
